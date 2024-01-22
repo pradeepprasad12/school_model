@@ -1,0 +1,43 @@
+{% extends 'sta/base.html'%}
+{% load static %}
+    
+{% block content %}  
+{% load widget_tweaks %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header text-black">
+            <h2>Signup</h2>
+            {% if messages %}
+                    {% for message in messages %}
+                        <p {% if message.tags %} class="alert alert-{{ message.tags}} mb-5" {% endif %}> {{message}}</p>
+                    {% endfor %}
+                  {% endif %}
+          </div>
+          <div class="card-body">
+            <form action="{% url 'signup' %}" method="POST" novalidate>
+              {% csrf_token %}
+                 {% for field in form.visible_fields %}
+                   <div class="form-group">
+                       {{ field.label_tag }}
+                          {% render_field field class="form-control" %}
+                            {% for error in field.errors %}
+                              <span style="color:red">{{ error }}</span>
+                            {% endfor %}
+                 {% endfor %}
+                     <input type="submit" value="Register" class="btn btn-block btn-primary">
+                   </div>
+            </form>
+         </div>
+         <p>Already have an account? <a href="{% url 'login_view' %}">Login</a></p>
+
+              </div>   
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+  {% endblock content %}

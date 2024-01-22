@@ -1,0 +1,48 @@
+{% extends 'sta/base.html'%}
+{% load static %}
+    
+{% block content %}  
+{% load widget_tweaks %}
+<div class="container">
+  <h2>Welcome to the Dashboard, {{ user.name }}!</h2>
+  <p>Email: {{ user.email }}</p>
+  <h4>Click hare to Image Uplode<a href="{% url 'upload_image' %}">  Upload image</a></h4>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12 mx-auto">
+  {% if user_type == 'admin' %}
+    <!-- Display admin-specific content using the 'images' context variable -->
+    {% for image in images %}
+      <!-- Display image information as needed -->
+      {{ image.user.user_type }} <br>
+      <img src="{{ image.image.url }}" alt="Image" style="width: 50px; height: 50px;">
+      {{ image.user.email }} - {{ image.created_at }}<br><br>
+    {% endfor %}
+
+  {% elif user_type == 'student' %}
+    <!-- Display student-specific content using the 'images' context variable -->
+    {% for image in images %}
+      <!-- Display image information as needed -->
+      {{ image.user.user_type }} <br>
+      <img src="{{ image.image.url }}" alt="Image" style="width: 50px; height: 50px;">
+      {{ image.user.email }} - {{ image.created_at }}<br><br>
+    {% endfor %}
+
+  {% elif user_type == 'teacher' %}
+    <!-- Display teacher-specific content using the 'images' context variable -->
+    {% for image in images %}
+      <!-- Display image information as needed -->
+      {{ image.user.user_type }} <br>
+      <img src="{{ image.image.url }}" alt="Image" style="width: 50px; height: 50px;">
+      {{ image.user.email }} - {{ image.created_at }}<br><br>
+    {% endfor %}
+
+  {% else %}
+    <!-- Handle other user types or unknown types -->
+    <p>Unknown user type.</p>
+
+  {% endif %}
+</div>
+</div>
+</div>
+{% endblock content %}
